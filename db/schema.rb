@@ -23,11 +23,13 @@ ActiveRecord::Schema.define(version: 20160303034644) do
 
   create_table "players", force: :cascade do |t|
     t.string  "name"
-    t.string  "number"
+    t.string  "phone_number"
     t.string  "keyword"
     t.string  "status"
     t.integer "room_id"
   end
+
+  add_index "players", ["room_id"], name: "index_players_on_room_id", using: :btree
 
   create_table "rooms", force: :cascade do |t|
     t.string "name"
