@@ -5,3 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+8.times do |n|
+  Room.create(name: "room#{n+1}", description: "create room#{n+1}", host_id)
+end
