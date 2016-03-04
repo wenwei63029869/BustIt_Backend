@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160303034644) do
+ActiveRecord::Schema.define(version: 20160303221828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "authorizations", force: :cascade do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "token"
+    t.integer  "player_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "secret"
+  end
 
   create_table "keywords", force: :cascade do |t|
     t.string "keyword_one"
@@ -22,11 +32,13 @@ ActiveRecord::Schema.define(version: 20160303034644) do
   end
 
   create_table "players", force: :cascade do |t|
-    t.string  "name"
+    t.string  "display_name"
+    t.string  "email"
     t.string  "phone_number"
     t.string  "keyword"
     t.string  "status"
     t.integer "room_id"
+    t.string  "facebook"
   end
 
   add_index "players", ["room_id"], name: "index_players_on_room_id", using: :btree
