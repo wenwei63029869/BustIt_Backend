@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  def current_user
+    p set_current_user
+  end
+
   private
 
   def authenticate_user!
@@ -13,7 +17,7 @@ class ApplicationController < ActionController::Base
     head :unauthorized
   end
 
-  def current_user
+  def current_userserializers
     @current_user
   end
 
@@ -23,6 +27,6 @@ class ApplicationController < ActionController::Base
 
     payload = Token.new(token)
 
-    @current_user = User.find(payload.user_id) if payload.valid?
+    @current_user = Player.find(payload.user_id) if payload.valid?
   end
 end

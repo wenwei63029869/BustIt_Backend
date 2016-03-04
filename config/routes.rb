@@ -4,7 +4,12 @@ Rails.application.routes.draw do
     resources :rooms do
       resources :players, only: [:create, :update, :destroy]
     end
+    post 'auth/:provider', to: 'auth#authenticate'
+    get '/me', to: 'auth#show'
+    put '/me', to: 'auth#update'
   end
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
