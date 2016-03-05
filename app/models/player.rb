@@ -72,7 +72,6 @@ class Player < ActiveRecord::Base
     p player
   end
 
-
   def displayName= name
     self.display_name = name
   end
