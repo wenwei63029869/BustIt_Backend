@@ -19,7 +19,7 @@ class Api::RoomsController < ApplicationController
       }.to_json
     else
       render status: 422, json: {
-        errors: list.errors
+        errors: room.errors.messages
       }.to_json
     end
   end
