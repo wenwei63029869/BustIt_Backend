@@ -1,8 +1,8 @@
 class Api::RoomsController < ApplicationController
   skip_before_filter :verify_authenticity_token
   def index
-    p Room.all
-    render json: Room.all
+    rooms = Room.all
+    render json: rooms.as_json(include:[:players])
   end
 
   def show
@@ -25,16 +25,20 @@ class Api::RoomsController < ApplicationController
   end
 
   def update
+    p params
+    current_user.update(phone_number: params[:phoneNumber])
     room = Room.find(params[:id])
-    if room.update(room_params)
+    room.players << current_user
+    if room.save
+      p current_user
       render status: 200, json: {
         message: "Successfully updated",
-        todo_list: room
+        room: room
       }.to_json
     else
        render status: 500, json: {
         message: "The To-do room could not be updated.",
-        todo_list: room
+        room: room
       }.to_json
     end
   end
