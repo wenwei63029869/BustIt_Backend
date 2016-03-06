@@ -21,6 +21,7 @@ class Api::PlayersController < ApplicationController
   def update
     player = current_user
       if player.update(player_params)
+        p player
         render status: 200, json: {
           message: "Successfully updated player.",
           room: @room,
@@ -47,7 +48,7 @@ class Api::PlayersController < ApplicationController
   private
 
   def player_params
-    params.require("player").permit("displayName", "phone_number")
+    params.require("player").permit('phone_number', 'roole')
   end
 
   def find_room

@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20160303221828) do
     t.string  "status"
     t.integer "room_id"
     t.string  "facebook"
+    t.string  "role"
   end
 
   add_index "players", ["room_id"], name: "index_players_on_room_id", using: :btree
