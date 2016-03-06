@@ -8,6 +8,7 @@ class CreatePlayers < ActiveRecord::Migration
       t.string :status
       t.references :room, index: true
       t.string :facebook
+      t.string :role
     end
   end
 end

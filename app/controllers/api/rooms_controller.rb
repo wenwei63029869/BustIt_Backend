@@ -19,25 +19,31 @@ class Api::RoomsController < ApplicationController
       }.to_json
     else
       render status: 422, json: {
-        errors: list.errors
+        errors: room.errors.messages
       }.to_json
     end
   end
 
   def update
+    p "*" * 50
     p params
-    current_user.update(phone_number: params[:phoneNumber])
     room = Room.find(params[:id])
-    room.players << current_user
+    if params["exit"]
+      current_user.update(room_id: nil)
+    else
+      user = current_user
+      user.update(phone_number: params[:phoneNumber], role: params[:role])
+      room.players << user unless room.players.include?(user)
+    end
     if room.save
-      p current_user
+      p 'save'
       render status: 200, json: {
         message: "Successfully updated",
         room: room
       }.to_json
     else
        render status: 500, json: {
-        message: "The To-do room could not be updated.",
+        message: "The room could not be updated.",
         room: room
       }.to_json
     end
