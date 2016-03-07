@@ -42,7 +42,7 @@ class Api::RoomsController < ApplicationController
         room: room
       }.to_json
     else
-       render status: 500, json: {
+      render status: 500, json: {
         message: "The room could not be updated.",
         room: room
       }.to_json
