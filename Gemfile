@@ -27,6 +27,8 @@ gem 'rack-cors', :require => 'rack/cors'
 
 gem 'angular_rails_csrf'
 
+gem 'twilio-ruby', '~> 4.11.1'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

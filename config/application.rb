@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'twilio-ruby'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -27,6 +28,7 @@ module BustItBackend
         resource '*', :headers => :any, :methods => [:get, :post, :options, :delete, :put]
       end
     end
+
     config.active_record.raise_in_transactional_callbacks = true
   end
 end

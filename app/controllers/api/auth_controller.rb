@@ -47,7 +47,7 @@ class Api::AuthController < ApplicationController
   def show
     p "get current_user"
     p current_user
-    render json: current_user
+    render json: current_user.to_json
   end
 
 end
