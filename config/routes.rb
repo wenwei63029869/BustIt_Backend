@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources :rooms do
       resources :players, only: [:create, :update, :destroy]
     end
-    get 'rooms/:id/game_begin', to: 'rooms#game_begin'
+    post 'rooms/:id/game_begin', to: 'rooms#game_begin'
     post 'rooms/:id/vote_out', to: 'rooms#vote_out'
     post 'auth/:provider', to: 'auth#authenticate'
     get '/me', to: 'auth#show'

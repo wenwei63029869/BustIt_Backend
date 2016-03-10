@@ -71,9 +71,18 @@ class Api::RoomsController < ApplicationController
     #   body: 'Honey, I am your best friend.'
     # )
 
+    p params[:keyword_pair]
     room = Room.find(params[:id])
     players = room.players.where(role: 'player')
-    spy_citizen_generater(keyword_generater, players)
+    p "keyword pair"
+    p keyword_pair = if params[:keyword_pair]
+      keyword = Keyword.new(keyword_one: params[:keyword_pair][:keyword_one], keyword_two: params[:keyword_pair][:keyword_two])
+      keyword.save
+      {"spy_keyword" => params[:keyword_pair][:keyword_one], "citizen_keyword" => params[:keyword_pair][:keyword_two]}
+    else
+      keyword_generater
+    end
+    spy_citizen_generater(keyword_pair, players)
     room.update(status: 'in progress')
     render json: room.as_json(include:[:players])
   end
@@ -87,10 +96,10 @@ class Api::RoomsController < ApplicationController
       room.players.each do |player|
         player.update(role: 'player', keyword: 'keyword')
       end
-      render json: {game_over: true, message: "Game over"}.to_json
+      render json: {game_over: true, message: "Game over", room: room}.to_json(include:[:players])
     else
       player.update(role: 'audience')
-      render json: {game_over: false, message: "Game continues"}.to_json
+      render json: {game_over: false, message: "Game continues", room: room}.to_json(include:[:players])
     end
   end
 
@@ -100,26 +109,19 @@ class Api::RoomsController < ApplicationController
   end
 
   def keyword_generater
-    p "keyword generater"
-    p index = rand(1..Keyword.all.count)
-    p keywords = Keyword.find(index)
-    p "keyword_pair"
-    p keyword_pair = [keywords.keyword_one, keywords.keyword_two]
-    p "spy_keyword"
-    p spy_keyword_index = rand(0..1)
-    p "citizen_keyword"
-    p spy_keyword = keyword_pair.delete_at(spy_keyword_index)
+    index = rand(1..Keyword.all.count)
+    keywords = Keyword.find(index)
+    keyword_pair = [keywords.keyword_one, keywords.keyword_two]
+    spy_keyword_index = rand(0..1)
+    spy_keyword = keyword_pair.delete_at(spy_keyword_index)
     {"spy_keyword" => spy_keyword, "citizen_keyword" => keyword_pair[0]}
   end
 
   def spy_citizen_generater(keyword_pair, players)
-    p 'players_array'
-    p players_array = players.to_a
+    players_array = players.to_a
     spy_player_index = rand(0...players.length)
     spy_player = players_array.delete_at(spy_player_index)
     spy_player.update(keyword: keyword_pair["spy_keyword"], role: 'spy')
-    p "*" * 50
-    p keyword_pair[0]
     players_array.each do |player|
       player.update(keyword: keyword_pair["citizen_keyword"], role: 'citizen')
       p player.keyword
