@@ -10,6 +10,17 @@
 #   Player.create(phone_number: "626173827#{n}", status: "Playing")
 # end
 
-8.times do |n|
-  Room.create(name: "room#{n+1}", description: "create room#{n+1}")
+# 8.times do |n|
+#   Room.create(name: "room#{n+1}", description: "create room#{n+1}")
+# end
+
+5.times do |n|
+  Player.create(display_name: "player#{n+2}", email: "player#{n+2}.gmail.com", role: "player", room_id: 3)
+end
+
+keyword_pair = [["Accounting", "Finance"], ["Fingers", "Toes"], ["sparrow", "crow"], ["Eyebrow", "Beard"], ["Superman", "Iron Man"], ["Bodyguard", "Security"], ["
+Chili", "Mustard"], ["Lipstick", "Lip-gross"], ["Spiderman", "Batman"], ["Contact Lens", "Sunglasses"]]
+
+keyword_pair.each do |pair|
+  Keyword.create(keyword_one: pair[0], keyword_two: pair[1])
 end
