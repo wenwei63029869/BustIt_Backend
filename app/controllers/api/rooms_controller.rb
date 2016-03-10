@@ -93,8 +93,8 @@ class Api::RoomsController < ApplicationController
     p player = Player.find(params[:player_id])
     if player.role == 'spy'
       room.update(status: nil)
-      room.players.each do |player|
-        player.update(role: 'player', keyword: 'keyword')
+      room.players.each do |user|
+        user.update(role: 'player', keyword: 'keyword') if user.role != 'judge'
       end
       render json: {game_over: true, message: "Game over", room: room}.to_json(include:[:players])
     else
