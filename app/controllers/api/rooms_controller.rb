@@ -71,10 +71,8 @@ class Api::RoomsController < ApplicationController
     #   body: 'Honey, I am your best friend.'
     # )
 
-    p params[:keyword_pair]
     room = Room.find(params[:id])
     players = room.players.where(role: 'player')
-    p "keyword pair"
     p keyword_pair = if params[:keyword_pair]
       keyword = Keyword.new(keyword_one: params[:keyword_pair][:keyword_one], keyword_two: params[:keyword_pair][:keyword_two])
       keyword.save
